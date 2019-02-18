@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,14 +47,14 @@ public class CrazyHotelsWsRepository implements HotelsRepository {
         return getCrazyHotelsData(request);
     }
 
-    public List<Hotels> getCrazyHotelsData(Request request) {
+    private List<Hotels> getCrazyHotelsData(Request request) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(this.crazyHotelProviderUrl)
                 .queryParam("city", request.getCity())
-                .queryParam("from", request.getFromDate())
-                .queryParam("to",request.getToDate())
+                .queryParam("from", LocalDate.parse(request.getFromDate()).atStartOfDay().toString())
+                .queryParam("to",LocalDate.parse(request.getToDate()).atStartOfDay().toString())
                 .queryParam("adultsCount",request.getNumOfAdults());
         HttpEntity entity = new HttpEntity(headers);
         ResponseEntity<String> exchange = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, String.class);

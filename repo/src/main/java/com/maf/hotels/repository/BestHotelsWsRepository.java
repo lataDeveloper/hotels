@@ -31,7 +31,7 @@ public class BestHotelsWsRepository implements HotelsRepository {
         return getBestHotelsData(request);
     }
 
-    public List<Hotels> getBestHotelsData(Request request) {
+    private List<Hotels> getBestHotelsData(Request request) {
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
