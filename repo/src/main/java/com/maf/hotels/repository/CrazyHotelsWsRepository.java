@@ -53,6 +53,7 @@ public class CrazyHotelsWsRepository implements HotelsRepository {
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(this.crazyHotelProviderUrl)
                 .queryParam("city", request.getCity())
+                //this date is ISO_INSTANT
                 .queryParam("from", LocalDate.parse(request.getFromDate()).atStartOfDay().toString())
                 .queryParam("to",LocalDate.parse(request.getToDate()).atStartOfDay().toString())
                 .queryParam("adultsCount",request.getNumOfAdults());
